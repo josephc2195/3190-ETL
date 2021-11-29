@@ -11,3 +11,8 @@ cwd = os.getcwd()
 
 playerStats = pd.read_csv(cwd + "/Datasets/playerStats.csv")
 adStats = pd.read_csv(cwd + "/Datasets/advancedStats.csv")
+app = dash.Dash(__name__)
+server = app.server
+
+if __name__ == '__main__':
+        app.run_server()
