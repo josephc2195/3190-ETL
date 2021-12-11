@@ -15,7 +15,7 @@ player_stats = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-E
 advanced_stats = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/AdvancedStats.csv")
 attendance = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/attendance.csv")
 stats_and_salaries = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/stats_and_salary.csv")
-
+player_wikis = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/player_wikis.csv")
 
 teams = attendance.loc["0":, "TEAM"].values.tolist()
 att_percent = attendance.loc["0":, "PCT"].values.tolist()
