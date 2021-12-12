@@ -31,7 +31,7 @@ for num in att_percent:
         total += num
 avg_attendance = total/30
 
-fig = px.scatter(sorted_by_salary, x="RPM", y="SALARY_MILLIONS", hover_name="PLAYER", hover_data=["SALARY_MILLIONS","RPM","POINTS","TRB","AST"])
+scatter_rpm_salary = px.scatter(sorted_by_salary, x="RPM", y="SALARY_MILLIONS", hover_name="PLAYER", hover_data=["SALARY_MILLIONS","RPM","POINTS","TRB","AST"])
 
 app = dash.Dash(__name__)
 server = app.server
@@ -39,7 +39,7 @@ app.title = "NBA Stats Dashboard"
 topMenu = html.Header(role='banner', children=[
         html.Div([
                 html.A("Home", href="/", style={"padding":10}),
-                html.A("Top 10 lists", href="top-10")
+                html.A("Breakdown", href="/breakdown")
         ])
 ])
 
@@ -71,19 +71,21 @@ index_page = html.Div(children=[
         }),
 ])
 
-top_10 = html.Div(children=[
+breakdown = html.Div(children=[
         html.H1("Top players"),
         html.H3("This graph shows the production of a player vs their salary"),
-        dcc.Graph(figure=fig),
-        html.H3("As we can see Lebron James was the most paid for the year, but also was by far the best player (according to Real Plus-Minus)")
+        dcc.Graph(figure=scatter_rpm_salary),
+        html.H3("As we can see Lebron James was the most paid for the year, but also was by far the best player (according to Real Plus-Minus)"),
+        html.Br(),
 
+        html.H3("Production on the court isn't the only measure of someones value to an NBA team. Lets see if popular players on social media have an affect on attendance which would be added revenue for a team.")
 
 ])
 @app.callback(Output(component_id="content", component_property="children"),
 [Input(component_id='url', component_property="pathname")])
 def display_page(pathname):
-        if pathname =="/top-10":
-                return top_10
+        if pathname =="/breakdown":
+                return breakdown
         else:
                 return index_page
 
