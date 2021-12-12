@@ -35,10 +35,10 @@ fig = px.scatter(sorted_by_salary, x="RPM", y="SALARY_MILLIONS", hover_name="PLA
 
 app = dash.Dash(__name__)
 server = app.server
-app.title = "Dashboard"
+app.title = "NBA Stats Dashboard"
 topMenu = html.Header(role='banner', children=[
         html.Div([
-                html.A("Home", href="/"),
+                html.A("Home", href="/", style={"padding":10}),
                 html.A("Top 10 lists", href="top-10")
         ])
 ])
