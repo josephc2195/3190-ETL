@@ -73,7 +73,10 @@ index_page = html.Div(children=[
 
 top_10 = html.Div(children=[
         html.H1("Top players"),
-        dcc.Graph(figure=fig)
+        html.H3("This graph shows the production of a player vs their salary"),
+        dcc.Graph(figure=fig),
+        html.H3("As we can see Lebron James was the most paid for the year, but also was by far the best player (according to Real Plus-Minus)")
+
 
 ])
 @app.callback(Output(component_id="content", component_property="children"),
