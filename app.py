@@ -31,7 +31,7 @@ for num in att_percent:
         total += num
 avg_attendance = total/30
 
-fig = px.scatter(sorted_by_salary, x="SALARY_MILLIONS", y="RPM", hover_name="PLAYER", hover_data=["SALARY_MILLIONS","RPM","POINTS","TRB","AST"])
+fig = px.scatter(sorted_by_salary, x="RPM", y="SALARY_MILLIONS", hover_name="PLAYER", hover_data=["SALARY_MILLIONS","RPM","POINTS","TRB","AST"])
 
 app = dash.Dash(__name__)
 server = app.server
