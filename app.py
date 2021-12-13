@@ -32,16 +32,6 @@ for num in att_percent:
         total += num
 avg_attendance = total/30
 
-selected = player_stats[["TEAM", "TWITTER_FOLLOWERS"]]
-new_df = selected.copy()
-team_twitters = new_df.groupby(["TEAM"]).sum()
-done_df = pd.DataFrame()
-for count, val in enumerate(player_stats["TEAM"]):
-        if "/" in val:
-                print(val)
-        else:
-                done_df["TEAM"] = val
-                done_df["FOLLOWERS"] = team_twitters["TWITTER_FOLLOWERS"][count]
 
 scatter_rpm_salary = px.scatter(player_stats, x="RPM", y="SALARY_MILLIONS", hover_name="PLAYER", hover_data=["SALARY_MILLIONS","RPM","POINTS","TRB","AST"])
 scatter_rpm_salary.update_layout(
