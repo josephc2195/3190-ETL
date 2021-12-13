@@ -11,8 +11,6 @@ import pandas as pd
 
 cwd = os.getcwd()
 
-#player_stats = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/playerStats.csv")
-#advanced_stats = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/AdvancedStats.csv")
 big_data = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/nba_2016_2017_100.csv")
 attendance = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/attendance.csv")
 player_stats = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/stats_and_salary.csv")
@@ -27,19 +25,6 @@ att_percent = attendance["PCT"]
 val = team_values["VALUE_MILLIONS"]
 player_stats["TWITTER_FOLLOWERS"] = big_data["TWITTER_FOLLOWER_COUNT_MILLIONS"]
 
-total = 0
-for num in att_percent:
-        total += num
-avg_attendance = total/30
-
-selected = player_wikis[["names", "pageviews"]]
-player_pageviews = selected.copy()
-new_df = player_pageviews.groupby(["names"]).sum()
-new_df.sort_values(by=["pageviews"], ascending=[False], inplace=True)
-top_50 = new_df.head(50)
-players_50 = top_50["names"]
-pageviews_50 = top_50["pageviews"]
-
 scatter_rpm_salary = px.scatter(player_stats, x="RPM", y="SALARY_MILLIONS", hover_name="PLAYER", hover_data=["SALARY_MILLIONS","RPM","POINTS","TRB","AST"])
 scatter_rpm_salary.update_layout(
         xaxis_title="Real-Plus-Minus",
@@ -51,7 +36,6 @@ scatter_followers_salary.update_layout(
         xaxis_title="Twitter followers",
         yaxis_title="2016-2017 Salary"
 )
-
 
 app = dash.Dash(__name__)
 server = app.server
@@ -103,16 +87,6 @@ players_page = html.Div(children=[
         dcc.Graph(figure=scatter_followers_salary),
         html.Br(),
         html.H3("Which players are the most popular in terms of pageviews?"),
-        dcc.Graph(figure={
-                'data': [
-                        {'x': players_50, 'y': pageviews_50, 'type': 'bar', 'name': 'name'}
-                ],
-                'layout': {
-                        'title': 'Top 50 popular players'
-                }
-        }),
-
-
 ])
 @app.callback(Output(component_id="content", component_property="children"),
 [Input(component_id='url', component_property="pathname")])
