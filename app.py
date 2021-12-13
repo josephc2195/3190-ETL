@@ -13,25 +13,43 @@ cwd = os.getcwd()
 
 #player_stats = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/playerStats.csv")
 #advanced_stats = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/AdvancedStats.csv")
+big_data = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/nba_2016_2017_100.csv")
 attendance = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/attendance.csv")
-sorted_by_points = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/stats_and_salary.csv")
+player_stats = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/stats_and_salary.csv")
 #player_wikis = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/player_wikis.csv")
 team_values = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/team_values.csv")
 
 attendance.sort_values(by=["TEAM"], ascending=[True], inplace=True)
 team_values.sort_values(by=["TEAM"], ascending=[True], inplace=True)
-sorted_by_salary = sorted_by_points.sort_values(by=["SALARY_MILLIONS"], ascending=[False])
 
 teams = attendance["TEAM"]
 att_percent = attendance["PCT"]
 val = team_values["VALUE_MILLIONS"]
+player_stats["TWITTER_FOLLOWERS"] = big_data["TWITTER_FOLLOWER_COUNT_MILLIONS"]
 
 total = 0
 for num in att_percent:
         total += num
 avg_attendance = total/30
 
-scatter_rpm_salary = px.scatter(sorted_by_salary, x="RPM", y="SALARY_MILLIONS", hover_name="PLAYER", hover_data=["SALARY_MILLIONS","RPM","POINTS","TRB","AST"])
+selected = player_stats[["TEAM", "TWITTER_FOLLOWERS"]]
+new_df = selected.copy()
+team_twitters = new_df.groupby(["TEAM"]).sum()
+done_df = pd.DataFrame()
+for count, val in enumerate(player_stats["TEAM"]):
+        if "/" in val:
+                print(val)
+        else:
+                done_df["TEAM"] = val
+                done_df["FOLLOWERS"] = team_twitters["TWITTER_FOLLOWERS"][count]
+
+scatter_rpm_salary = px.scatter(player_stats, x="RPM", y="SALARY_MILLIONS", hover_name="PLAYER", hover_data=["SALARY_MILLIONS","RPM","POINTS","TRB","AST"])
+scatter_rpm_salary.update_layout(
+        xaxis_title="Real-Plus-Minus",
+        yaxis_title="2016-2017 Salary"
+)
+
+
 
 app = dash.Dash(__name__)
 server = app.server
