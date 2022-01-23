@@ -14,7 +14,6 @@ cwd = os.getcwd()
 big_data = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/nba_2016_2017_100.csv")
 attendance = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/attendance.csv")
 player_stats = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/stats_and_salary.csv")
-player_wikis = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/player_wikis.csv")
 team_values = pd.read_csv("https://raw.githubusercontent.com/josephc2195/3190-ETL/master/Datasets/team_values.csv")
 
 attendance.sort_values(by=["TEAM"], ascending=[True], inplace=True)
